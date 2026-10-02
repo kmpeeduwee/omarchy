@@ -71,7 +71,7 @@ grep -qx 'systemctl --user try-restart wireplumber.service' "$CALLS" ||
   fail "migration restarts audio so the rule takes effect" "$(cat "$CALLS")"
 pass "migration restarts audio so the rule takes effect"
 
-grep -qx 'amixer -c 2 sset Speaker 100%' "$CALLS" ||
+grep -qx 'amixer -c 2 sset Speaker 0dB' "$CALLS" ||
   fail "migration puts the interface mixer back to 0 dB" "$(cat "$CALLS")"
 pass "migration puts the interface mixer back to 0 dB"
 

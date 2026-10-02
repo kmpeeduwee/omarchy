@@ -23,6 +23,6 @@ if (( ${#audient_cards[@]} > 0 )); then
   # interface last left mid-attenuation would keep that attenuation now that
   # WirePlumber no longer moves the element. Put it back to 0 dB.
   for card in "${audient_cards[@]}"; do
-    amixer -c "$card" sset Speaker 100% >/dev/null 2>&1 || true
+    amixer -c "$card" sset Speaker 0dB >/dev/null 2>&1 || true
   done
 fi
