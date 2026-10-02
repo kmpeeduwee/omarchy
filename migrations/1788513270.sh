@@ -17,7 +17,7 @@ destination=~/.config/wireplumber/wireplumber.conf.d/audient-soft-mixer.conf
 if (( ${#audient_cards[@]} > 0 )); then
   # Restart before touching the mixer: while the old binding is still live,
   # WirePlumber writes its stored volume straight back into the element below.
-  omarchy-restart-audio
+  systemctl --user try-restart wireplumber.service 2>/dev/null || true
 
   # ACP drove "Speaker Playback Volume" as the sink's hardware volume, so an
   # interface last left mid-attenuation would keep that attenuation now that

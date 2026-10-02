@@ -13,10 +13,10 @@ trap 'rm -rf "$test_tmp"' EXIT
 stub_bin="$test_tmp/bin"
 mkdir -p "$stub_bin"
 
-cat >"$stub_bin/omarchy-restart-audio" <<'SH'
+cat >"$stub_bin/systemctl" <<'SH'
 #!/bin/bash
 
-echo 'omarchy-restart-audio' >>"$CALLS"
+printf 'systemctl %s\n' "$*" >>"$CALLS"
 SH
 
 cat >"$stub_bin/amixer" <<'SH'
@@ -67,7 +67,7 @@ cmp -s "$(seeded_rule)" "$shipped" ||
   fail "migration seeds the shipped rule"
 pass "migration seeds the shipped rule"
 
-grep -qx 'omarchy-restart-audio' "$CALLS" ||
+grep -qx 'systemctl --user try-restart wireplumber.service' "$CALLS" ||
   fail "migration restarts audio so the rule takes effect" "$(cat "$CALLS")"
 pass "migration restarts audio so the rule takes effect"
 
