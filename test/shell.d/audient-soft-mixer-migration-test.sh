@@ -75,6 +75,10 @@ grep -qx 'amixer -c 2 sset Speaker 0dB' "$CALLS" ||
   fail "migration puts the interface mixer back to 0 dB" "$(cat "$CALLS")"
 pass "migration puts the interface mixer back to 0 dB"
 
+[[ $(grep -nx 'systemctl --user try-restart wireplumber.service' "$CALLS" | cut -d: -f1) -lt $(grep -nx 'amixer -c 2 sset Speaker 0dB' "$CALLS" | cut -d: -f1) ]] ||
+  fail "migration restarts audio before resetting the mixer" "$(cat "$CALLS")"
+pass "migration restarts audio before resetting the mixer"
+
 if grep -q 'amixer -c 0' "$CALLS"; then
   fail "migration leaves cards from other vendors alone" "$(cat "$CALLS")"
 fi
